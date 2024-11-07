@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osso-vr-api", "osso-vr-api\osso-vr-api.csproj", "{751BE87D-01FE-4625-941E-077617847800}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osso-vr-api", "osso-vr-api\osso-vr-api.csproj", "{751BE87D-01FE-4625-941E-077617847800}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osso-vr-data-processor", "osso-vr-data-processor\osso-vr-data-processor.csproj", "{6B8111C7-D093-44E9-B742-030B47CEB970}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osso-vr-models", "osso-vr-models\osso-vr-models.csproj", "{02AD7B66-1D16-4B8C-A0D1-9253C1CB9CF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{751BE87D-01FE-4625-941E-077617847800}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{751BE87D-01FE-4625-941E-077617847800}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{751BE87D-01FE-4625-941E-077617847800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B8111C7-D093-44E9-B742-030B47CEB970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B8111C7-D093-44E9-B742-030B47CEB970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B8111C7-D093-44E9-B742-030B47CEB970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B8111C7-D093-44E9-B742-030B47CEB970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02AD7B66-1D16-4B8C-A0D1-9253C1CB9CF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02AD7B66-1D16-4B8C-A0D1-9253C1CB9CF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02AD7B66-1D16-4B8C-A0D1-9253C1CB9CF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02AD7B66-1D16-4B8C-A0D1-9253C1CB9CF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
