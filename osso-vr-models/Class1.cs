@@ -17,6 +17,7 @@ public class Run
     public Guid Id { get; set; }
     //public DateTime Date { get; set; }
     public Guid UserId { get; set; }
+    public User User { get; set; }
     public List<UserInteraction> Interactions { get; set; }
     public DateTime Date { get; set; }
 }
@@ -56,7 +57,7 @@ public class RunResult
     public bool Completed { get; }
     public bool Passed { get; }
     public int Duration { get; }
-
+    public string UserName { get; set; }
     public List<InteractionResult> Interactions { get; }
 
     public RunResult(Run run, IEnumerable<string> interactionIds)
@@ -71,6 +72,7 @@ public class RunResult
         Duration = interactionResults.Sum(i => i.ActualTime);
         Id = run.Id;
         Date = run.Date;
+        UserName = run.User.Name;
     }
 }
 

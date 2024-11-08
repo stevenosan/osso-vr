@@ -1,6 +1,4 @@
-﻿using osso_vr_models;
-using System.Text.Json;
-using Interaction = osso_vr_models.Interaction;
+﻿using System.Text.Json;
 
 namespace osso_vr_data_processor;
 public static class EntityProcessor
