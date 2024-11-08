@@ -8,11 +8,6 @@ Console.WriteLine("Hello, World!");
 var fileReader = new FileReader();
 var interactions = fileReader.ReadFile<List<Interaction>>("c:\\data\\goalTimes.json");
 
-foreach(var interaction in interactions)
-{
-    Console.WriteLine(interaction.Id);
-}
-
 var users = new List<User>();
 
 var userFiles = Directory.GetFiles("c:\\data\\users");
@@ -21,11 +16,6 @@ foreach(var userFile in userFiles)
 {
     var user = fileReader.ReadFile<User>(userFile);
     users.Add(user);
-}
-
-foreach (var user in users)
-{
-    Console.WriteLine(user.Name);
 }
 
 var runs = new List<Run>();
@@ -38,7 +28,17 @@ foreach (var runFile in runFiles)
     runs.Add(run);
 }
 
-foreach (var run in runs)
+foreach(var run in runs)
 {
-    Console.WriteLine(run.Id);
+    foreach(var interaction in run.Interactions)
+    {
+        interaction.InteractionDefinition = interactions.Single(i => i.Id == interaction.InteractionId);
+    }
 }
+
+var interactionIds = interactions.Select(i => i.Id);
+var runResults = runs.Select(r => new RunResult(r, interactionIds)).ToList();
+
+var result = new Result(runResults);
+
+Console.WriteLine(result);

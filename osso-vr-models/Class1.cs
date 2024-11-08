@@ -15,11 +15,10 @@ public class User
 public class Run
 {
     public Guid Id { get; set; }
-    public DateTime Date { get; set; }
+    //public DateTime Date { get; set; }
     public Guid UserId { get; set; }
     public List<UserInteraction> Interactions { get; set; }
-
-
+    public DateTime Date { get; set; }
 }
 
 public class UserInteraction
@@ -40,9 +39,12 @@ public class Result
 
     public Result(IList<RunResult> runs)
     {
+        var test = runs.Count(r => r.Completed);
+        var bar = runs.Count(r => r.Passed);
+        Runs = runs;
         TotalRuns = runs.Count;
-        CompletedRunsPercentage = runs.Count(r => r.Completed) / runs.Count;
-        PassedRunsPercentage = runs.Count(r => r.Passed) / runs.Count;
+        CompletedRunsPercentage = runs.Count(r => r.Completed) / (decimal)runs.Count;
+        PassedRunsPercentage = runs.Count(r => r.Passed) / (decimal)runs.Count;
         MedianCompletedRunTime = runs.Select(r => r.Duration).Average();
     }
 }
@@ -53,17 +55,18 @@ public class RunResult
     public DateTime Date { get; }
     public bool Completed { get; }
     public bool Passed { get; }
-
-
     public int Duration { get; }
 
     public List<InteractionResult> Interactions { get; }
 
-    public RunResult(Run run, IList<InteractionResult> interactionResults, IEnumerable<Interaction> interactionDefinitions)
+    public RunResult(Run run, IEnumerable<string> interactionIds)
     {
-        Interactions = [.. interactionResults];
+        var interactionResults = run.Interactions.Select(i => new InteractionResult(i)).ToList();
+
+
+        Interactions = interactionResults;
         Duration = interactionResults.Select(i => i.ActualTime).Sum();
-        Completed = interactionResults.Select(i => i.Id).SequenceEqual(interactionDefinitions.Select(i => i.Id)) && interactionResults.Any(i => !i.Completed);
+        Completed = interactionResults.Select(i => i.Id).SequenceEqual(interactionIds) && !interactionResults.Any(i => i.Completed == false);
         Passed = Completed && interactionResults.Any(i => !i.Passed);
         Duration = interactionResults.Sum(i => i.ActualTime);
         Id = run.Id;
@@ -83,8 +86,8 @@ public class InteractionResult
     {
         Id = userInteraction.InteractionId;
         GoalTime = userInteraction.InteractionDefinition.GoalTime;
-        ActualTime = userInteraction.EndTime != 0 ? userInteraction.EndTime - userInteraction.StartTime : 0;
         Completed = userInteraction.EndTime > 0;
-        Passed = ActualTime < GoalTime;
+        ActualTime = Completed ? userInteraction.EndTime - userInteraction.StartTime : 0;
+        Passed = Completed && ActualTime <= GoalTime;
     }
 }
