@@ -15,8 +15,19 @@ public class Result
         result.TotalRuns = runs.Count;
         result.CompletedRunsPercentage = runs.Count(r => r.Completed) / (decimal)runs.Count;
         result.PassedRunsPercentage = runs.Count(r => r.Passed) / (decimal)runs.Count;
-        result.MedianCompletedRunTime = runs.Select(r => r.Duration).Average();
+        result.MedianCompletedRunTime = CalculateMedianValue(runs.Select(r => r.Duration).Order().ToList());
 
         return result;
+    }
+
+    private static int CalculateMedianValue(IList<int> durations)
+    {
+        var result = 0;
+
+        var count = durations.Count;
+
+        var median = durations.ElementAt(count / 2);
+
+        return median;
     }
 }

@@ -98,13 +98,59 @@ public class RunResultTests
         runResult.Passed.Should().BeFalse();
     }
 
+    [Test]
+    public void WhenCreateRunResult_ThenSetIdToRunId()
+    {
+        var interactionIds = CreateInteractionIds(20);
+        var users = CreateUsers(5).ToList();
+
+        var run = CreateRun(users, interactionIds);
+
+        var runResult = RunResult.CreateRunResult(run, interactionIds, users);
+
+        runResult.Id.Should().Be(run.Id);
+    }
+
+    [Test]
+    public void WhenCreaterunResult_ThenSetUsername_ToUsersUserName()
+    {
+        var interactionIds = CreateInteractionIds(20);
+        var users = CreateUsers(5).ToList();
+
+        var run = CreateRun(users, interactionIds);
+
+        var runResult = RunResult.CreateRunResult(run, interactionIds, users);
+
+        runResult.UserName.Should().Be(users.First().Name);
+    }
+
+    [Test]
+    public void WhenCreaterunResult_ThenSetDate_ToMetaDataDate()
+    {
+        var interactionIds = CreateInteractionIds(20);
+        var users = CreateUsers(5).ToList();
+
+        var run = CreateRun(users, interactionIds);
+
+        var runResult = RunResult.CreateRunResult(run, interactionIds, users);
+
+        runResult.Date.Should().Be(run.MetaData.Date);
+    }
+
     public static Run CreateRun(IEnumerable<User> users, IEnumerable<string> interactionIds)
     {
         var interactions = Enumerable.Range(0, interactionIds.Count()).Select(i => InteractionResultsTests.CreateUserInteraction(interactionIds.ElementAt(i), true));
 
         var user = users.First();
 
-        var run = new Run { MetaData = new MetaData { UserId = user.Id }, Interactions = interactions.ToList() };
+        var run = new Run { 
+            MetaData = new MetaData { 
+                UserId = user.Id,
+                Date = DateTime.Now
+            }, 
+            Interactions = interactions.ToList(),
+            Id = Guid.NewGuid(),
+        };
 
         return run;
     }
