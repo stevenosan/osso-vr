@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using osso_vr_data_processor;
 using osso_vr_models;
+using System.Text.Json;
 using Interaction = osso_vr_models.Interaction;
 
 Console.WriteLine("Hello, World!");
@@ -37,8 +38,12 @@ foreach(var run in runs)
 }
 
 var interactionIds = interactions.Select(i => i.Id);
-var runResults = runs.Select(r => new RunResult(r, interactionIds)).ToList();
+var runResults = runs.Select(r => RunResult.CreateRunResult(r, interactionIds, users)).ToList();
 
-var result = new Result(runResults);
+var result = Result.CreateResult(runResults);
 
-Console.WriteLine(result);
+var resultJson = JsonSerializer.Serialize(result);
+
+var path = "c:\\data\\result.json";
+
+File.WriteAllText(path, resultJson);

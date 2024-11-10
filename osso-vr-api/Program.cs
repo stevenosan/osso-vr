@@ -7,11 +7,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "localCors",
+                  policy =>
+                  {
+                      policy.WithOrigins("https://localhost:5173", "http://localhost:5173");
+                  });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    
+
+    app.UseCors("localCors");
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }
