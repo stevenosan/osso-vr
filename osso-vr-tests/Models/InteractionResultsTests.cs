@@ -2,7 +2,7 @@
 using osso_vr_models;
 
 namespace osso_vr_tests.Models;
-public class InteractionResultsTests
+public partial class InteractionResultsTests
 {
     [SetUp]
     public void Setup()
@@ -107,7 +107,7 @@ public class InteractionResultsTests
         interactionResult.Completed.Should().Be(true);
     }
 
-    public UserInteraction CreateUserInteraction(int startTime, int endTime, int goalTime)
+    public static UserInteraction CreateUserInteraction(int startTime, int endTime, int goalTime)
     {
         var interactionDefinition = new Interaction
         {
@@ -126,17 +126,26 @@ public class InteractionResultsTests
         return userInteraction;
     }
 
-    public static class RandomGenerator
+    public static UserInteraction CreateUserInteraction(string interactionId, bool completed = true, bool passed = true)
     {
-        private static Random _random = new Random();
-        public static bool NextBool()
-        {
-            return _random.Next(2) == 0;
-        }
+        var startTime = RandomGenerator.NextInt(1, 100);
+        var endTime = completed ? RandomGenerator.NextInt(startTime, 1000) : 0;
+        var goalTime = passed ? RandomGenerator.NextInt(startTime-endTime, int.MaxValue) : RandomGenerator.NextInt();
 
-        public static int NextInt(int floor = 0, int ceiling = int.MaxValue)
+        var interactionDefinition = new Interaction
         {
-            return _random.Next(floor, ceiling);
-        }
+            Id = interactionId,
+            GoalTime = goalTime
+        };
+
+        var userInteraction = new UserInteraction
+        {
+            InteractionId = interactionDefinition.Id,
+            InteractionDefinition = interactionDefinition,
+            EndTime = endTime,
+            StartTime = startTime
+        };
+
+        return userInteraction;
     }
 }

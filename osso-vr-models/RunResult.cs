@@ -19,7 +19,7 @@ public class RunResult
         runResult.Interactions = interactionResults;
         runResult.Duration = interactionResults.Select(i => i.ActualTime).Sum();
         runResult.Completed = interactionResults.Select(i => i.Id).SequenceEqual(interactionIds) && !interactionResults.Any(i => i.Completed == false);
-        runResult.Passed = runResult.Completed && interactionResults.Any(i => !i.Passed);
+        runResult.Passed = runResult.Completed && !interactionResults.Any(i => !i.Passed);
         runResult.Duration = interactionResults.Sum(i => i.ActualTime);
         runResult.Id = run.Id;
         runResult.Date = run.MetaData.Date;
