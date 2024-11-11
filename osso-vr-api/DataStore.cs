@@ -12,7 +12,7 @@ public class DataStore : IDataStore
 
     public DataStore(string resultsPath)
     {
-        var resultJson = File.ReadAllText("c:\\data\\result.json");
+        var resultJson = File.ReadAllText(resultsPath);
 
         _result = JsonSerializer.Deserialize<Result>(resultJson);
     }

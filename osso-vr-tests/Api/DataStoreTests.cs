@@ -8,7 +8,6 @@ namespace osso_vr_api_tests
 {
     public class DataStoreTests
     {
-        private Mock<IDataStore> _dataStoreMock;
         private DataStore _dataStore;
 
         [SetUp]
@@ -31,9 +30,9 @@ namespace osso_vr_api_tests
             };
 
             string resultJson = JsonSerializer.Serialize(result);
-            File.WriteAllText("c:\\data\\result.json", resultJson);
+            File.WriteAllText("test.json", resultJson);
 
-            _dataStore = new DataStore("c:\\data\\result.json");
+            _dataStore = new DataStore("test.json");
         }
 
         [Test]
