@@ -22,12 +22,6 @@ public class Result
 
     private static int CalculateMedianValue(IList<int> durations)
     {
-        var result = 0;
-
-        var count = durations.Count;
-
-        var median = durations.ElementAt(count / 2);
-
-        return median;
+        return durations.ElementAt(durations.Count / 2);
     }
 }

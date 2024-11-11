@@ -1,9 +1,8 @@
+using osso_vr_api;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -15,6 +14,8 @@ builder.Services.AddCors(options =>
                       policy.WithOrigins("https://localhost:5173", "http://localhost:5173");
                   });
 });
+
+builder.Services.AddSingleton<IDataStore>(new DataStore("c:\\data\\result.json"));
 
 var app = builder.Build();
 

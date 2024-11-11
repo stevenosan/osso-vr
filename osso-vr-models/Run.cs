@@ -1,10 +1,13 @@
-﻿namespace osso_vr_models;
+﻿using System.Text.Json.Serialization;
+
+namespace osso_vr_models;
 
 public class Run
 {
     public Guid Id { get; set; }
     public List<UserInteraction> Interactions { get; set; }
 
+    [JsonPropertyName("metadata")]
     public MetaData MetaData { get; set; }
 }
 
